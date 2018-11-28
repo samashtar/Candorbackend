@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
 
   def profile
-    byebug
+    token = request.headers["Authorization"].split(' ')[1]
+    payload = decode(token)
+    user = User.find(payload["user_id"])
     render json: { user: UserSerializer.new(user) }, status: :accepted
+    
   end
 
   # Sign Up
@@ -18,6 +21,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :coupons)
   end
 end
