@@ -1,4 +1,5 @@
 class CouponsController < ApplicationController
+  
     def index
       render json: Coupon.all
     end
@@ -9,10 +10,14 @@ class CouponsController < ApplicationController
     end
   
     def create
-      @coupon = Coupon.new(coupon_params)
-      @coupon.save
+      token = request.headers["Authorization"].split(' ')[1]
+      payload = decode(token)
+      user = User.find(payload["user_id"])
+      @coupon = Coupon.create(info:params["info"].to_json)
+      user.coupons << @coupon
       render json: @coupon
-    end
+      
+  end
   
     def update
       @coupon = Coupon.find(params[:id])
@@ -25,7 +30,7 @@ class CouponsController < ApplicationController
       @coupon.destroy
     end
   
- 
+    
   
   end
   
