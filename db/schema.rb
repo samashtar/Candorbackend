@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_201720) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "facebookId"
     t.string "name"
     t.string "email"
     t.string "password_digest"
