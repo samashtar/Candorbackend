@@ -9,17 +9,15 @@ class UsersController < ApplicationController
   end
 
   def find_or_create_with_facebook
-    byebug
     if User.find_by(facebookId: params["facebookId"])
-      byebug
       @user = User.find_by(facebookId: params["facebookId"])
       
     else 
-      byebug
+      
     @user = User.create(facebookId: params["facebookId"], name:params["name"], password: 'test')
   
     end 
-    byebug
+    
     if @user.valid?
       render json: { user: UserSerializer.new(@user) }, status: :created
     else
