@@ -9,7 +9,9 @@ class CouponsController < ApplicationController
       render json: @coupon
     end
   
+
     def create
+      
       token = request.headers["Authorization"].split(' ')[1]
       payload = decode(token)
       user = User.find(payload["user_id"])
